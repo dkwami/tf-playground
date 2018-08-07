@@ -55,6 +55,13 @@ resource "aws_instance" "web1" {
   instance_type 	= "t2.micro"
   key_name		= "${var.AWS_KEY_PAIR}"
   security_groups	= ["${var.WINDOWS_SECURITY_GROUP}"]
+
+  user_data = <<EOF
+    <powershell>
+      net user dkwami 'P@ssword12345' /add /y
+      net localgroup administrators dkwami /add
+    </powershell>
+  EOF
 }
 
 #resource "aws_instance" "web2" {
